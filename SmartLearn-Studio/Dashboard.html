@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Dashboard | SmartLearn Studio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+        }
+        .sidebar-item:hover {
+            background-color: #4a5568;
+            color: #ffffff;
+        }
+        .active-link {
+            background-color: #6366f1; /* indigo-600 */
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .active-link:hover {
+            background-color: #4f46e5; /* indigo-700 */
+        }
+        .course-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="flex min-h-screen">
+    
+    <!-- Sidebar -->
+    <div class="w-64 bg-gray-800 text-gray-300 flex flex-col shadow-2xl">
+        <div class="p-6 text-xl font-extrabold text-indigo-400 border-b border-gray-700">
+            SmartLearn Studio
+        </div>
+        <nav class="flex-grow p-4 space-y-2">
+            <a href="#" class="sidebar-item active-link">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+                Home
+            </a>
+            <a href="#" class="sidebar-item hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a1 1 0 011-1h10a1 1 0 011 1v10a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm1 1h8v1H5V6zm0 2h8v1H5V8zm0 2h8v1H5V10zm0 2h3v1H5v-1z" clip-rule="evenodd" /></svg>
+                My Courses
+            </a>
+            <a href="#" class="sidebar-item hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 2.891a4.286 4.286 0 00-6.86 0l-.576.945a1.25 1.25 0 00.74 1.77l1.042.336a1 1 0 01.31 1.052l-.178.498a4.25 4.25 0 002.583 4.212l1.58.42a1 1 0 001.123-.334l.498-.945a.75.75 0 011.028-.275l.945.498a1.25 1.25 0 001.077 0l.945-.498a.75.75 0 011.028.275l.498.945a1 1 0 001.123.334l1.58-.42a4.25 4.25 0 002.583-4.212l-.178-.498a1 1 0 01.31-1.052l1.042-.336a1.25 1.25 0 00.74-1.77l-.576-.945a4.286 4.286 0 00-6.86 0z"/></svg>
+                Explore
+            </a>
+            <a href="#" class="sidebar-item hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9 9a1 1 0 012 0v3a1 1 0 11-2 0V9zM9 13a1 1 0 112 0 1 1 0 01-2 0z" clip-rule="evenodd" /></svg>
+                Analytics (Admin)
+            </a>
+            <div class="border-t border-gray-700 my-4"></div>
+            <a href="#" class="sidebar-item hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-1 1h-1a1 1 0 00-1 1v3a1 1 0 01-1 1h-1a1 1 0 00-1 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V3zm2 4h10v1H5V7zm0 3h8v1H5v-1zm0 3h6v1H5v-1z" clip-rule="evenodd" /></svg>
+                Settings
+            </a>
+            <a href="login_page.html" class="sidebar-item hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-1 1h-1a1 1 0 00-1 1v3a1 1 0 01-1 1h-1a1 1 0 00-1 1v3a1 1 0 01-1 1H4a1 1 0 01-1-1V3zm2 4h10v1H5V7zm0 3h8v1H5v-1zm0 3h6v1H5v-1z" clip-rule="evenodd" /></svg>
+                Logout
+            </a>
+        </nav>
+
+        <!-- Footer Bar (for the plan upgrade mockup) -->
+        <div class="p-4 bg-gray-700 text-sm text-gray-300">
+            <div class="mb-2">
+                <p class="font-semibold">4 Out of 5 Courses created</p>
+                <div class="w-full bg-gray-600 rounded-full h-1.5">
+                    <div class="bg-indigo-400 h-1.5 rounded-full" style="width: 80%"></div>
+                </div>
+            </div>
+            <p class="text-xs">Upgrade your plan for unlimited course generation.</p>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto p-8">
+        <!-- Top Bar -->
+        <div class="flex justify-between items-center mb-10 border-b pb-4">
+            <div class="flex flex-col">
+                <h1 class="text-3xl font-extrabold text-gray-900">
+                    Hello, Instructor Name
+                </h1>
+                <p class="text-gray-600 mt-1">
+                    Create new courses with AI, manage your existing curriculum, and analyze student performance.
+                </p>
+            </div>
+            <a href="CourseCategory.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-200 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                Create AI Course
+            </a>
+        </div>
+
+        <!-- My AI Courses Section -->
+        <section>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">My AI Courses</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                
+                <!-- Course Card 1: Advanced React Native -->
+                <div class="course-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100" onclick="window.location.href='CourseLayout.html'">
+                    <div class="h-40 bg-cover bg-center flex items-center justify-center p-4" style="background-image: url('https://placehold.co/600x400/3730a3/ffffff?text=SQL');">
+                        <div class="text-white text-center">
+                            <h3 class="text-xl font-bold bg-black bg-opacity-50 p-1 rounded">SQL</h3>
+                            <p class="text-xs bg-black bg-opacity-50 p-0.5 rounded mt-1">Programming</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2 truncate">SQL Dept Learning</h4>
+                        <div class="flex justify-between items-center text-sm text-gray-600">
+                            <span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1 text-indigo-500" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 6h12a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1zm0 2v8h12V8H4z"/></svg>8 Chapters</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-3 py-1 text-xs font-medium rounded-full">Advanced</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Card 2: YouTube Video Creation -->
+                <div class="course-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                    <div class="h-40 bg-cover bg-center flex items-center justify-center p-4" style="background-image: url('https://placehold.co/600x400/4f46e5/ffffff?text=AI+Video+Content');">
+                         <div class="text-white text-center">
+                            <h3 class="text-xl font-bold bg-black bg-opacity-50 p-1 rounded">Advanced YouTube Video Creation with AI</h3>
+                            <p class="text-xs bg-black bg-opacity-50 p-0.5 rounded mt-1">Creative</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2 truncate">Advanced YouTube Video Creation with AI</h4>
+                        <div class="flex justify-between items-center text-sm text-gray-600">
+                            <span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1 text-indigo-500" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 6h12a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1zm0 2v8h12V8H4z"/></svg>5 Chapters</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-3 py-1 text-xs font-medium rounded-full">Advanced</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Card 3: Fitness at Home -->
+                <div class="course-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                    <div class="h-40 bg-cover bg-center flex items-center justify-center p-4" style="background-image: url('https://placehold.co/600x400/10b981/ffffff?text=Fitness+Workout');">
+                        <div class="text-white text-center">
+                            <h3 class="text-xl font-bold bg-black bg-opacity-50 p-1 rounded">Fitness at Home for Beginners</h3>
+                            <p class="text-xs bg-black bg-opacity-50 p-0.5 rounded mt-1">Health</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2 truncate">Fitness at Home for Beginners</h4>
+                        <div class="flex justify-between items-center text-sm text-gray-600">
+                            <span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1 text-indigo-500" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 6h12a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1zm0 2v8h12V8H4z"/></svg>5 Chapters</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 text-xs font-medium rounded-full">Beginner</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Course Card 4: Placeholder/Example -->
+                <div class="course-card bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                    <div class="h-40 bg-cover bg-center flex items-center justify-center p-4" style="background-image: url('https://placehold.co/600x400/f59e0b/ffffff?text=MERN+Development');">
+                        <div class="text-white text-center">
+                            <h3 class="text-xl font-bold bg-black bg-opacity-50 p-1 rounded">Full-Stack MERN Development</h3>
+                            <p class="text-xs bg-black bg-opacity-50 p-0.5 rounded mt-1">Programming</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-2 truncate">Full-Stack MERN Development</h4>
+                        <div class="flex justify-between items-center text-sm text-gray-600">
+                            <span><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1 text-indigo-500" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 6h12a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1zm0 2v8h12V8H4z"/></svg>12 Chapters</span>
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 text-xs font-medium rounded-full">Intermediate</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+</div>
+
+</body>
+</html>

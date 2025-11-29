@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Course Wizard | SmartLearn Studio</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .step-active {
+            color: #a855f7; /* purple-500 */
+            border-color: #a855f7;
+        }
+        .step-complete {
+            color: #10b981; /* green-500 */
+            border-color: #10b981;
+        }
+        .step-inactive {
+            color: #9ca3af; /* gray-400 */
+        }
+        .category-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .category-selected {
+            border: 3px solid #a855f7;
+            box-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.3);
+        }
+        .input-focus:focus {
+            border-color: #a855f7;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.4);
+        }
+        .hidden-step {
+            display: none;
+        }
+        .option-card {
+            transition: border-color 0.2s, background-color 0.2s;
+            cursor: pointer;
+            border: 2px solid #e5e7eb; /* default gray-200 */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+        }
+        .option-selected {
+            border-color: #a855f7;
+            background-color: #f3e8ff; /* purple-50 background */
+        }
+        /* New helper classes for line coloring */
+        .line-complete {
+            background-color: #10b981 !important; /* green-500 */
+        }
+        .line-inactive {
+            background-color: #e5e7eb !important; /* gray-200 */
+        }
+    </style>
+</head>
+<body>
+
+<div class="flex min-h-screen">
+    
+    <!-- Left Sidebar (Kept minimal for focus) -->
+    <div class="w-16 bg-white shadow-lg flex flex-col items-center py-6 border-r border-gray-100">
+        <div class="mb-8">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9v-6h2v6zm4 0h-2v-6h2v6zm-2-9c-1.33 0-2.43-.88-2.84-2H14.84c-.41 1.12-1.51 2-2.84 2z"/></svg>
+        </div>
+        <a href="Dashboard.html" class="p-2 rounded-lg text-gray-400 hover:bg-gray-100 transition duration-150" title="Back to Dashboard">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+        </a>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto p-12 bg-gray-50">
+        <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-12">
+            Create AI-Powered Course
+        </h1>
+
+        <!-- Progress Stepper -->
+        <div class="max-w-3xl mx-auto flex justify-between items-center mb-16">
+            <!-- Step 1: Category -->
+            <div id="step-indicator-1" class="flex flex-col items-center step-indicator">
+                <div class="h-10 w-10 rounded-full border-2 flex items-center justify-center font-bold step-active step-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 6h12a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1zm0 2v8h12V8H4z"/></svg>
+                </div>
+                <p class="text-sm font-semibold mt-2 step-active step-label">Category</p>
+            </div>
+            
+            <!-- Line 1 -->
+            <div id="line-1" class="flex-1 h-0.5 bg-gray-300 mx-4 step-line line-inactive"></div>
+
+            <!-- Step 2: Topic & Desc -->
+            <div id="step-indicator-2" class="flex flex-col items-center step-indicator">
+                <div class="h-10 w-10 rounded-full border-2 flex items-center justify-center font-bold step-inactive step-icon">2</div>
+                <p class="text-sm font-medium mt-2 step-inactive step-label">Topic & Desc</p>
+            </div>
+
+             <!-- Line 2 -->
+            <div id="line-2" class="flex-1 h-0.5 bg-gray-300 mx-4 step-line line-inactive"></div>
+
+            <!-- Step 3: Options -->
+            <div id="step-indicator-3" class="flex flex-col items-center step-indicator">
+                <div class="h-10 w-10 rounded-full border-2 flex items-center justify-center font-bold step-inactive step-icon">3</div>
+                <p class="text-sm font-medium mt-2 step-inactive step-label">Options</p>
+            </div>
+        </div>
+
+        <!-- Course Wizard Content Container -->
+        <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+            
+            <!-- Step 1 Content: Select Category -->
+            <div id="step-1" class="current-step">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-8">
+                    Select the Course Category
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Category 1: Programming -->
+                    <div id="cat-programming" class="category-card p-6 rounded-xl border-2 border-gray-200 text-center hover:border-purple-300" onclick="selectCategory(this)">
+                        <div class="text-5xl mb-4 flex justify-center text-purple-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                        </div>
+                        <p class="text-lg font-semibold text-gray-700">Programming</p>
+                    </div>
+
+                    <!-- Category 2: Health -->
+                    <div id="cat-health" class="category-card p-6 rounded-xl border-2 border-gray-200 text-center hover:border-purple-300" onclick="selectCategory(this)">
+                        <div class="text-5xl mb-4 flex justify-center text-pink-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h-4a2 2 0 01-2-2v-2a2 2 0 012-2h4a2 2 0 012 2v2a2 2 0 01-2 2zM12 4v4a2 2 0 01-2 2H8a2 2 0 01-2-2V4a2 2 0 012-2h2a2 2 0 012 2zM12 14v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4a2 2 0 012-2h2a2 2 0 012 2zM17 4h-4a2 2 0 01-2-2v2a2 2 0 012 2h4a2 2 0 012 2v2a2 2 0 01-2 2h-4a2 2 0 01-2-2v-2a2 2 0 012-2h4a2 2 0 012 2v2a2 2 0 01-2 2H10" /></svg>
+                        </div>
+                        <p class="text-lg font-semibold text-gray-700">Health</p>
+                    </div>
+
+                    <!-- Category 3: Creative -->
+                    <div id="cat-creative" class="category-card p-6 rounded-xl border-2 border-gray-200 text-center hover:border-purple-300" onclick="selectCategory(this)">
+                        <div class="text-5xl mb-4 flex justify-center text-blue-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 4v16M17 4v16M3 8h4M17 8h4M3 16h4M17 16h4M7 4h10a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2z" /></svg>
+                        </div>
+                        <p class="text-lg font-semibold text-gray-700">Creative</p>
+                    </div>
+                </div>
+            </div> <!-- End Step 1 Content -->
+
+            <!-- Step 2 Content: Topic & Description Input -->
+            <div id="step-2" class="hidden-step">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-8">
+                    Define Your Course Topic
+                </h2>
+                
+                <div class="mb-6">
+                    <label for="course-topic" class="block text-lg font-medium text-gray-700 mb-2">
+                        💡 Write the topic for which you want to generate a course (e.g., Python, Yoga, etc.):
+                    </label>
+                    <input type="text" id="course-topic" name="course-topic" required 
+                           class="w-full rounded-lg border-gray-300 border shadow-sm p-3 focus:ring-purple-500 focus:border-purple-500 input-focus" 
+                           placeholder="Enter your course topic here...">
+                </div>
+
+                <div class="mb-8">
+                    <label for="course-description" class="block text-lg font-medium text-gray-700 mb-2">
+                        Tell us more about your course, what you want to include in the course (Optional)
+                    </label>
+                    <textarea id="course-description" name="course-description" rows="5" 
+                              class="w-full rounded-lg border-gray-300 border shadow-sm p-3 focus:ring-purple-500 focus:border-purple-500 input-focus" 
+                              placeholder="About your course..."></textarea>
+                </div>
+            </div> <!-- End Step 2 Content -->
+
+            <!-- Step 3 Content: Options -->
+            <div id="step-3" class="hidden-step">
+                 <h2 class="text-2xl font-semibold text-gray-800 mb-8">
+                    Final Options: Configure AI Generation
+                </h2>
+
+                <form id="options-form" onsubmit="handleFinalSubmission(event)">
+                
+                    <!-- 1. Difficulty Level -->
+                    <div class="mb-8">
+                        <label class="block text-lg font-medium text-gray-700 mb-4">
+                            1. Select Difficulty Level
+                        </label>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div id="diff-beginner" class="option-card p-4 rounded-lg border-2 border-gray-300 text-center" onclick="selectOption(this, 'difficulty')">
+                                <span class="text-2xl font-bold text-green-600">Beginner</span>
+                                <p class="text-sm text-gray-500">Focus on basics & core concepts.</p>
+                            </div>
+                            <div id="diff-intermediate" class="option-card p-4 rounded-lg border-2 border-gray-300 text-center option-selected" onclick="selectOption(this, 'difficulty')">
+                                <span class="text-2xl font-bold text-yellow-600">Intermediate</span>
+                                <p class="text-sm text-gray-500">In-depth practice & real-world tasks.</p>
+                            </div>
+                            <div id="diff-advanced" class="option-card p-4 rounded-lg border-2 border-gray-300 text-center" onclick="selectOption(this, 'difficulty')">
+                                <span class="text-2xl font-bold text-red-600">Advanced</span>
+                                <p class="text-sm text-gray-500">Complex projects & deep theory.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Course Duration -->
+                    <div class="mb-8">
+                        <label class="block text-lg font-medium text-gray-700 mb-4">
+                            2. Select Target Duration
+                        </label>
+                        <div class="grid grid-cols-4 gap-4">
+                            <div id="dur-week" class="option-card p-4 rounded-lg border-2 border-gray-300 text-center" onclick="selectOption(this, 'duration')">
+                                <span class="text-xl font-bold text-gray-700">1 Week</span>
+                            </div>
+                            <div id="dur-month" class="option-card p-4 rounded-lg border-2 border-gray-300 text-center option-selected" onclick="selectOption(this, 'duration')">
+                                <span class="text-xl font-bold text-gray-700">1 Month</span>
+                            </div>
+                            <div id="dur-six-weeks" class="option-card p-4 rounded-lg border-2 border-gray-300 text-center" onclick="selectOption(this, 'duration')">
+                                <span class="text-xl font-bold text-gray-700">6 Weeks</span>
+                            </div>
+                            <div id="dur-custom" class="p-4">
+                                <input type="text" id="custom-duration" placeholder="Custom (e.g., 5 days)" 
+                                    class="w-full rounded-lg border-gray-300 border shadow-sm p-3 focus:ring-purple-500 focus:border-purple-500 input-focus text-sm" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Course Type -->
+                    <div class="mb-8">
+                        <label class="block text-lg font-medium text-gray-700 mb-4">
+                            3. Choose Course Type / Format
+                        </label>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div id="type-text" class="option-card p-4 rounded-lg border-2 border-gray-300 text-center" onclick="selectOption(this, 'type')">
+                                <span class="text-2xl font-bold text-gray-700">Text-Based</span>
+                            </div>
+                            <div id="type-video" class="option-card p-4 rounded-lg border-2 border-gray-300 text-center" onclick="selectOption(this, 'type')">
+                                <span class="text-2xl font-bold text-gray-700">Video-Based</span>
+                            </div>
+                            <div id="type-mixed" class="option-card p-4 rounded-lg border-2 border-gray-300 text-center option-selected" onclick="selectOption(this, 'type')">
+                                <span class="text-2xl font-bold text-gray-700">Mixed Media</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div> <!-- End Step 3 Content -->
+            
+            <!-- Universal Navigation Buttons -->
+            <div class="flex justify-between items-center mt-12">
+                <button id="prev-button" onclick="navigateStep(-1)" class="px-6 py-3 bg-gray-200 text-gray-500 font-semibold rounded-lg transition duration-200 invisible">
+                    Previous
+                </button>
+                <button id="next-button" onclick="navigateStep(1)" class="px-8 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-md transition duration-200 opacity-50 cursor-not-allowed">
+                    Next
+                </button>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<script>
+    let currentStep = 1;
+    let selectedCategory = null;
+    
+    // Global object to track selections
+    const selections = {
+        difficulty: 'diff-intermediate',
+        duration: 'dur-month',
+        type: 'type-mixed'
+    };
+    
+    const steps = [
+        { id: 'step-1', label: 'Category', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 6h12a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1zm0 2v8h12V8H4z"/></svg>` },
+        { id: 'step-2', label: 'Topic & Desc', icon: '2' },
+        { id: 'step-3', label: 'Options', icon: '3' }
+    ];
+
+    // --- Core Navigation Logic ---
+    function updateUI() {
+        // 1. Hide/Show Content
+        steps.forEach((step, index) => {
+            const stepElement = document.getElementById(step.id);
+            if (index + 1 === currentStep) {
+                stepElement.classList.remove('hidden-step');
+            } else {
+                stepElement.classList.add('hidden-step');
+            }
+        });
+
+        // 2. Update Stepper Indicators
+        steps.forEach((step, index) => {
+            const stepNum = index + 1;
+            const iconElement = document.querySelector(`#step-indicator-${stepNum} .step-icon`);
+            const labelElement = document.querySelector(`#step-indicator-${stepNum} .step-label`);
+            const lineElement = document.getElementById(`line-${stepNum - 1}`);
+            
+            iconElement.classList.remove('step-active', 'step-complete', 'step-inactive');
+            labelElement.classList.remove('step-active', 'step-complete', 'step-inactive');
+            if (lineElement) lineElement.classList.remove('line-complete', 'line-inactive');
+
+            if (stepNum === currentStep) {
+                iconElement.classList.add('step-active');
+                labelElement.classList.add('step-active');
+                if (iconElement.textContent.trim() !== '3') { 
+                    iconElement.innerHTML = stepNum;
+                }
+                if (stepNum === 1) iconElement.innerHTML = steps[0].icon;
+            } else if (stepNum < currentStep) {
+                iconElement.classList.add('step-complete');
+                labelElement.classList.add('step-complete');
+                iconElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>`;
+            } else {
+                iconElement.classList.add('step-inactive');
+                labelElement.classList.add('step-inactive');
+                if (iconElement.textContent.trim() !== '3') {
+                    iconElement.innerHTML = stepNum;
+                }
+            }
+            
+            // 3. Line Coloring Logic
+            if (lineElement) {
+                // Line is complete if the step BEFORE it is complete (or current step > line number)
+                if (stepNum <= currentStep) {
+                    lineElement.classList.add('line-complete');
+                } else {
+                    lineElement.classList.add('line-inactive');
+                }
+            }
+        });
+
+        // 4. Update Nav Buttons
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+
+        prevButton.classList.toggle('invisible', currentStep === 1);
+        
+        if (currentStep === 3) {
+            nextButton.textContent = 'Generate Course (3/3)';
+            nextButton.classList.remove('bg-purple-600', 'hover:bg-purple-700');
+            nextButton.classList.add('bg-green-600', 'hover:bg-green-700');
+            nextButton.onclick = handleFinalSubmission;
+        } else {
+            nextButton.textContent = 'Next';
+            nextButton.classList.remove('bg-green-600', 'hover:bg-green-700');
+            nextButton.classList.add('bg-purple-600', 'hover:bg-purple-700');
+            nextButton.onclick = () => navigateStep(1);
+        }
+        
+        // 5. Update Next Button State (Validation)
+        validateStep();
+    }
+    
+    function validateStep() {
+        const nextButton = document.getElementById('next-button');
+        let isValid = false;
+
+        if (currentStep === 1) {
+            isValid = selectedCategory !== null;
+        } else if (currentStep === 2) {
+            const topic = document.getElementById('course-topic').value.trim();
+            isValid = topic.length > 3; // Simple topic validation
+        } else if (currentStep === 3) {
+            // Check if default selections are defined
+            isValid = selections.difficulty && selections.duration && selections.type;
+            
+            // Check custom duration input if it's the selected duration type
+            if (selections.duration === 'dur-custom') {
+                const customDurationInput = document.getElementById('custom-duration');
+                if (customDurationInput) {
+                    isValid = customDurationInput.value.trim().length > 0;
+                } else {
+                    isValid = false; 
+                }
+            }
+        }
+
+        if (isValid) {
+            nextButton.classList.remove('opacity-50', 'cursor-not-allowed');
+        } else {
+            nextButton.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+        return isValid;
+    }
+
+    function navigateStep(direction) {
+        if (direction > 0) {
+            // Moving Next: Check validation first
+            if (!validateStep()) {
+                console.error(`Validation failed for step ${currentStep}`);
+                return;
+            }
+            // Save state (optional)
+            if (currentStep === 1) sessionStorage.setItem('selectedCategory', selectedCategory);
+            if (currentStep === 2) {
+                 sessionStorage.setItem('courseTopic', document.getElementById('course-topic').value.trim());
+                 sessionStorage.setItem('courseDescription', document.getElementById('course-description').value.trim());
+            }
+
+            if (currentStep < steps.length) {
+                currentStep++;
+            }
+        } else if (direction < 0) {
+            // Moving Previous: No validation needed
+            if (currentStep > 1) {
+                currentStep--;
+            }
+        }
+        
+        updateUI();
+    }
+
+    // --- Step 1 Specific Logic ---
+    function selectCategory(element) {
+        document.querySelectorAll('#step-1 .category-card').forEach(card => {
+            card.classList.remove('category-selected');
+        });
+        element.classList.add('category-selected');
+        selectedCategory = element.id;
+        validateStep();
+    }
+
+    // --- Step 3 Specific Logic ---
+    function selectOption(element, groupName) {
+        // Deselect previous elements in the same group within step-3
+        document.querySelectorAll(`#step-3 .option-card`).forEach(card => {
+             // Only affect elements within the same group type
+             if (card.id.startsWith(groupName.substring(0, 3))) { 
+                 card.classList.remove('option-selected');
+             }
+        });
+
+        // Select the new element
+        element.classList.add('option-selected');
+        selections[groupName] = element.id;
+        
+        // Handle input listener for custom duration
+        const customDurationInput = document.getElementById('custom-duration');
+        if (groupName === 'duration' && element.id === 'dur-custom') {
+             // Add listener only if it doesn't exist
+             if (!customDurationInput.hasListener) {
+                 customDurationInput.addEventListener('input', validateStep);
+                 customDurationInput.hasListener = true;
+             }
+        } else if (groupName === 'duration' && customDurationInput && customDurationInput.hasListener) {
+             // Remove listener if switching away from custom
+             customDurationInput.removeEventListener('input', validateStep);
+             customDurationInput.hasListener = false;
+        }
+
+        validateStep();
+    }
+
+    // --- Final Submission Logic ---
+    function handleFinalSubmission(e) {
+        e.preventDefault();
+        
+        if (!validateStep()) {
+            console.error("Please fill out all required options before generating the course.");
+            return;
+        }
+
+        // Collect all data (combining selections and inputs)
+        const finalData = {
+            category: sessionStorage.getItem('selectedCategory'), 
+            topic: sessionStorage.getItem('courseTopic'), 
+            description: sessionStorage.getItem('courseDescription'),
+            options: selections
+        };
+        
+        // Add custom duration value if selected
+        if (selections.duration === 'dur-custom') {
+            finalData.options.customDurationValue = document.getElementById('custom-duration').value.trim();
+        }
+
+        console.log("--- STARTING AI COURSE GENERATION (Final Data) ---");
+        console.log(finalData);
+        
+        // Use a non-alert message for production:
+        const mainContent = document.querySelector('main');
+        mainContent.innerHTML = `
+            <div class="max-w-xl mx-auto text-center p-12 bg-white rounded-xl shadow-lg border-2 border-green-500 mt-20">
+                <div class="text-green-600 text-6xl mb-4">
+                    <svg class="w-16 h-16 mx-auto animate-spin" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.75V3M17.127 6.873l.943-.943M19.25 12h1.25M17.127 17.127l.943.943M12 19.25V21M6.873 17.127l-.943.943M4.75 12H3.5M6.873 6.873l-.943-.943" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </div>
+                <h1 class="text-3xl font-extrabold text-gray-800 mb-4">Generating Course...</h1>
+                <p class="text-gray-600 mb-6">The SmartLearn AI is analyzing your inputs and generating the full course structure, content, quizzes, and project ideas.</p>
+                <p class="text-sm font-semibold text-purple-600">This may take 10-15 seconds...</p>
+                <a href="Dashboard.html" class="mt-8 inline-block text-indigo-600 hover:text-indigo-800 font-medium">Return to Dashboard (Simulated Success) &rarr;</a>
+            </div>
+        `;
+
+        // Simulate success redirect after a few seconds
+        setTimeout(() => {
+             window.location.href = "Dashboard.html"; 
+        }, 3000); // 3 seconds simulation
+    }
+
+    // Initialize UI on load
+    document.addEventListener('DOMContentLoaded', updateUI);
+
+    // Add event listeners for instant validation on inputs
+    document.addEventListener('input', (e) => {
+        if (currentStep === 2 && (e.target.id === 'course-topic' || e.target.id === 'course-description')) {
+            validateStep();
+        }
+    });
+
+</script>
+
+</body>
+</html>
