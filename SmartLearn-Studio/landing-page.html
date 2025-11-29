@@ -15,14 +15,7 @@
             background-color: #ffffff;
             overflow-x: hidden;
         }
-        .ai-gradient-text {
-            /* Text-based gradient for the headline */
-            background-image: linear-gradient(90deg, #6366f1, #a855f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-        }
+      
         /* background pattern */
         .hero-bg {
             background-image: radial-gradient(#e0e7ff 1px, transparent 1px);
@@ -34,16 +27,16 @@
 <body>
 
     <!-- Header / Navigation Bar -->
-    <header class="fixed top-0 left-0 w-full bg-white z-50 shadow-md dark:bg-gray-800">
+    <header class="fixed top-0 left-0 w-full z-50 shadow-md dark:bg-gray-800">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <!-- Logo -->
             <div class="flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-600" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15H9v-6h2v6zm4 0h-2v-6h2v6zm-2-9c-1.33 0-2.43-.88-2.84-2H14.84c-.41 1.12-1.51 2-2.84 2z"/></svg>
-                <span class="text-2xl font-extrabold text-white">SmartLearn Studio</span>
+                <span class="text-2xl font-semibold text-slate-100 ">Smart Learn Studio</span>
             </div>
             
             <!-- CTA Button -->
-            <a href="login-page.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-full shadow-lg transition duration-300 transform hover:scale-105">
+            <a href="login-page.html" class=" rounded-md bg-linear-90 from-[#6366f1] to-[#a855f7] text-slate-100 font-semibold py-2 px-4  shadow-lg transition duration-300 transform hover:scale-105  hover:bg-none  hover:bg-indigo-500 ">
                 Get Started
             </a>
         </nav>
@@ -52,18 +45,24 @@
     <!-- Hero Section -->
     <section class="hero-bg pt-32 pb-20 text-center relative overflow-hidden min-h-[70vh]">
         <div class="max-w-4xl mx-auto px-4">
-            <h1 class="text-6xl sm:text-7xl font-extrabold leading-tight tracking-tight mb-4">
+            <h1 class="text-6xl sm:text-7xl font-extrabold leading-tight tracking-tight mb-4 text-gray-800">
                 The Future of Education is
-                <span class="ai-gradient-text">Adaptive.</span>
+              <span class="bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent">
+  Adaptive.
+</span>
+
             </h1>
             <h2 class="text-4xl font-extrabold mb-6 text-gray-800">
-                <span class="ai-gradient-text">AI Course Generator</span> & Adaptive Learning System
+                & Adaptive Learning System
+                      <span class="bg-gradient-to-r from-[#6366f1] to-[#a855f7] bg-clip-text text-transparent">
+  AI Course Generator
+</span>
             </h2>
             <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
                 Revolutionize course creation for instructors and unlock hyper-personalized learning paths for every student. Built with MERN + Generative AI.
             </p>
             
-            <a href="Dashboard.html" class="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-xl shadow-xl text-lg transition duration-300 transform hover:scale-105">
+            <a href="Dashboard.html" class="inline-flex items-center bg-indigo-600 hover:bg-indigo-700/50 text-white font-semibold py-3 px-8 rounded-md shadow-xl text-lg transition  ease-in-out duration-700   transform hover:translate-y-3 hover:scale-100">
                 See the Demo Features
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" /></svg>
             </a>
